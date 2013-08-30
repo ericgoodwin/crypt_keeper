@@ -86,19 +86,8 @@ module CryptKeeper
         after_save :decrypt_callback
         after_find :decrypt_callback
         before_save :encrypt_callback
-
-        crypt_keeper_fields.each do |field|
-          ensure_field_is_encryptable! field
-        end
       end
 
-      # Private: Ensures that each field is of type text. This prevents
-      # encrypted data from being truncated
-      def ensure_field_is_encryptable!(field)
-        unless columns_hash["#{field}"].type == :text
-          raise ArgumentError, ":#{field} must be of type 'text' to be used for encryption"
-        end
-      end
     end
   end
 end
