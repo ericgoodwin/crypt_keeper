@@ -10,11 +10,8 @@ module CryptKeeper
     # Private: Encrypt each crypt_keeper_fields
     def encrypt_callback
       crypt_keeper_fields.each do |field|
-        begin
-          if !self[field].nil?
-            self[field] = self.class.encrypt read_attribute(field)
-          end
-        rescue ActiveModel::MissingAttributeError
+        if self.attributes[field] && !self[field].nil?
+          self[field] = self.class.encrypt read_attribute(field)
         end
       end
     end
@@ -22,11 +19,8 @@ module CryptKeeper
     # Private: Decrypt each crypt_keeper_fields
     def decrypt_callback
       crypt_keeper_fields.each do |field|
-        begin
-          if !self[field].nil?
-            self[field] = self.class.decrypt read_attribute(field)
-          end
-        rescue ActiveModel::MissingAttributeError
+        if self.attributes[field] && !self[field].nil?
+          self[field] = self.class.decrypt read_attribute(field)
         end
       end
     end
