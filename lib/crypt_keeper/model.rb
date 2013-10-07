@@ -10,7 +10,7 @@ module CryptKeeper
     # Private: Encrypt each crypt_keeper_fields
     def encrypt_callback
       crypt_keeper_fields.each do |field|
-        if self.attributes[field] && !self[field].nil?
+        if self.attributes[field.to_s] && !self[field].nil?
           self[field] = self.class.encrypt read_attribute(field)
         end
       end
@@ -19,7 +19,7 @@ module CryptKeeper
     # Private: Decrypt each crypt_keeper_fields
     def decrypt_callback
       crypt_keeper_fields.each do |field|
-        if self.attributes[field] && !self[field].nil?
+        if self.attributes[field.to_s] && !self[field].nil?
           self[field] = self.class.decrypt read_attribute(field)
         end
       end
